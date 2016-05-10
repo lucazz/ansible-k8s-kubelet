@@ -17,10 +17,6 @@ Role Variables
 
 `k8s.arch: amd64`
 
-`k8s.skydns_address: {{ hostvars['k8s_master']['ansible_eth0']['ipv4']['address'] }}`
-
-`k8s.master_address: {{ hostvars['k8s_master']['ansible_eth0']['ipv4']['address'] }}`
-
 `k8sdomain: k8s-cluster.local`
 
 `k8s.log_level: 0`
