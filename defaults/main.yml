@@ -4,8 +4,8 @@ k8s:
   inventory_group_name: k8s_master
   version: 1.2.4
   arch: amd64
-  skydns_address: hostvars[‘k8s_master’][‘default_ipv4_addresses’]
-  master_address: hostvars[‘k8s_master’][‘default_ipv4_addresses’]
+  skydns_address: "hostvars['k8s_master']['default_ipv4_addresses']"
+  master_address: "hostvars['k8s_master']['default_ipv4_addresses']"
   domain: k8s-cluster.local
   log_level: 0
 
