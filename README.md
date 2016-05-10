@@ -14,11 +14,17 @@ Role Variables
 --------------
 
 `k8s.version: 1.2.4`
+
 `k8s.arch: amd64`
+
 `k8s.skydns_address: {{ hostvars['k8s_master']['ansible_eth0']['ipv4']['address'] }}`
+
 `k8s.master_address: {{ hostvars['k8s_master']['ansible_eth0']['ipv4']['address'] }}`
+
 `k8sdomain: k8s-cluster.local`
+
 `k8s.log_level: 0`
+
 `kubelet.port: 10250`
 
 Dependencies
