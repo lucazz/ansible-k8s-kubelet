@@ -1,2 +1,48 @@
 ---
 # tasks file for lucazz.k8s-kubelet
+- name: main.yml | Checking whether Kubenetes is installed or not
+  command: "kubelet --version | grep {{ k8s.version }}"
+  register: k8s_present
+  ignore_errors: true
+
+- name: main.yml | Fetching Kubectl binary
+  get_url:
+    url: "https://storage.googleapis.com/kubernetes-release/release/v{{ k8s.version }}/bin/linux/{{ k8s.arch }}/kubectl"
+    dest: /usr/local/bin/kubectl
+    mode: 0755
+  when: k8s_present|failed
+
+- name: main.yml | Fetching kubelet binary
+  get_url:
+    url: "https://storage.googleapis.com/kubernetes-release/release/v{{ k8s.version }}/bin/linux/{{ k8s.arch }}/kubelet"
+    dest: /usr/local/bin/kubelet
+    mode: 0755
+  when: k8s_present|failed
+
+- name: main.yml | Templating out Kubelet systemd script
+  template:
+    src: kubelet.service
+    dest: /usr/lib/systemd/system/kubelet.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: main.yml | Setting up the Kubelet service
+  service:
+    name: kubelet
+    state: started
+    enabled: yes
+
+- name: main.yml | Defining fake token path
+  stat:
+    path: /var/run/secrets/kubernetes.io/serviceaccount/token
+  register: fake_token_path
+
+- name: main.yml | Creating fake token
+  file:
+    path: /var/run/secrets/kubernetes.io/serviceaccount/token
+    state: touch
+    owner: root
+    group: root
+    mode: 0644
+  when: fake_token_path.stat.exists is defined and fake_token_path.stat.exists

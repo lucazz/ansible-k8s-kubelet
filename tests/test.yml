@@ -1,5 +1,14 @@
 ---
 - hosts: localhost
-  remote_user: root
+  connection: local
+  become: yes
+  become_user: root
+  vars:
+    skydns_address: 127.0.0.1
+    master_address: 127.0.0.1
   roles:
+    - lucazz.common
+    - lucazz.etcd
+    - lucazz.calico
     - lucazz.k8s-kubelet
+    - lucazz.k8s-master

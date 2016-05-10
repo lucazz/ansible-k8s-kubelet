@@ -1,0 +1,10 @@
+- name: lucazz.common
+  src: https://github.com/Helabs/ansible-common.git
+- name: lucazz.etcd
+  src: https://github.com/lucazz/ansible-etcd.git
+- name: lucazz.calico
+  src: https://github.com/lucazz/ansible-calico.git
+- name: lucazz.k8s-kubelet
+  src: https://github.com/lucazz/ansible-k8s-kubelet.git
+- name: lucazz.k8s-master
+  src: https://github.com/lucazz/ansible-k8s-master.git

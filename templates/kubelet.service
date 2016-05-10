@@ -1,0 +1,27 @@
+[Unit]
+Description=Kubernetes Kubelet Server
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+After=docker.service calico-node.service
+
+[Service]
+EnvironmentFile=/etc/network-environment
+ExecStart=/usr/bin/kubelet \
+--address=0.0.0.0 \
+--port={{ kubelet.port }}\
+--hostname_override={{ ansible_default_ipv4.address }} \
+--config=/etc/kubernetes/manifests \
+--cluster-dns={{ k8s.skydns_address }} \
+--cluster-domain={{ k8s.domain }}\
+--api_servers=http://:{{ k8s.master_address }}8080 \
+--healthz_bind_address=0.0.0.0 \
+--healthz_port=10248 \
+--logtostderr=true \
+--allow_privileged=true \
+--v={{ log_level }} \
+--logtostderr=true \
+--network-plugin=cni \
+--network-plugin-dir=/etc/cni/net.d
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

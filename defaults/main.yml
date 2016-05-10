@@ -1,2 +1,13 @@
 ---
 # defaults file for lucazz.k8s-kubelet
+k8s:
+  version: 1.2.4
+  arch: amd64
+  skydns_address: {{ hostvars['k8s_master']['ansible_eth0']['ipv4']['address'] }}
+  master_address: {{ hostvars['k8s_master']['ansible_eth0']['ipv4']['address'] }}
+  domain: k8s-cluster.local
+  log_level: 0
+
+kubelet:
+  port: 10250
+

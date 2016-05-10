@@ -1,38 +1,54 @@
-Role Name
+Kubernetes Kubelet Role
 =========
 
-A brief description of the role goes here.
+[![Build Status](https://travis-ci.org/lucazz/ansible-k8s-kubelet.svg?branch=master)](https://travis-ci.org/lucazz/ansible-k8s-kubelet)
+
+Simple Ansible role to installs and configures Kubelet
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role only requires Ansible version 1.9+
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+`k8s.version: 1.2.4`
+`k8s.arch: amd64`
+`k8s.skydns_address: {{ hostvars['k8s_master']['ansible_eth0']['ipv4']['address'] }}`
+`k8s.master_address: {{ hostvars['k8s_master']['ansible_eth0']['ipv4']['address'] }}`
+`k8sdomain: k8s-cluster.local`
+`k8s.log_level: 0`
+`kubelet.port: 10250`
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This role depends on the following roles:
+
+*   [lucazz.etcd](https://github.com/lucazz/ansible-etcd)
+*   [lucazz.calico](https://github.com/lucazz/ansible-calico)
+*   [lucazz.k8s-master](https://github.com/lucazz/ansible-k8s-master)
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Using this roles as as simples as:
+- hosts: k8s_master
+  name: Gathering K8S Master Node facts
+  tasks: []
+- hosts: k8s_nodes
+  roles:
+    - lucazz.common
+    - lucazz.etcd
+    - lucazz.calico
+    - lucazz.k8s-kubelet
 
 License
 -------
-
 BSD
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Lucas do Amaral Saboya Works as Site Reliability Engineer @ [HE:labs](https://www.helabs.com)
