@@ -40,9 +40,6 @@ Example Playbook
 ----------------
 
 Using this roles as as simples as:
-- hosts: k8s_master
-  name: Gathering K8S Master Node facts
-  tasks: []
 - hosts: k8s_nodes
   roles:
     - lucazz.common

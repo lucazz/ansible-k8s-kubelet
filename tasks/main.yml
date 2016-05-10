@@ -1,5 +1,10 @@
 ---
 # tasks file for lucazz.k8s-kubelet
+- name: main.yml | Gathering facts from Kubernetes Master Nodes
+  setup:
+    delegate_to: {{ k8s.inventory_group_name }}
+    delegate_facts: True
+
 - name: main.yml | Checking whether Kubenetes is installed or not
   command: "kubelet --version | grep {{ k8s.version }}"
   register: k8s_present
